@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # WD-301 Assignment: Multi-Step Form + Prisma
 
 **Individual assignment.** You will continue from your team's midterm booking app, but this time you work alone on your own copy.
@@ -62,3 +63,48 @@ Submit your **hosted URL** via the Google Form: **https://forms.gle/gvXuBaG2jjGM
 In your repo's README, you may optionally write more about what you did: what your two new steps collect and why, decisions you made while integrating Prisma, anything you're proud of. This is optional but a good habit (and a good tiebreaker).
 
 Good luck. Same rule as the midterm: build it like the owner is paying you.
+=======
+# Trim Team — Booking App
+
+WD-301 midterm: online bookings for a Metro Vancouver lawn-care business.
+Customers book without an account. Staff sign in to see and manage jobs.
+
+**Team:** Jamie, Guil, Keisei, Nikola, Tatsuya
+
+**Live site:** https://trim-team.vercel.app
+
+## Stack
+- Next.js (App Router) + TypeScript
+- Tailwind CSS
+- Neon Postgres (`@neondatabase/serverless`)
+- Cookie sessions for staff (signed with `SESSION_SECRET`)
+
+## Routes
+- `/` — public home
+- `/step1`, `/step2`, `/step3` — public booking form
+- `/login` — staff sign-in
+- `/dashboard` — staff booking list (filter by status, city, lawn size)
+- `/dashboard/[id]` — staff booking detail (read-only)
+- `/dashboard/[id]/edit` — staff edit, confirm, complete, or cancel
+
+## Setup
+1. Clone the repo and install:
+
+```bash
+npm install
+```
+
+2. Copy `.env.example` to `.env.local` and set:
+   - `DATABASE_URL` — Neon pooled connection string
+   - `SESSION_SECRET` — long random string used to sign the staff cookie
+
+3. Run the app:
+
+```bash
+npx next dev
+```
+
+4. Open http://localhost:3000.
+
+Staff emails are in `db/seed-staff.sql`. The password for those accounts is `admin`.
+>>>>>>> 417761001508020705f904f3e163683f5b037cd3
