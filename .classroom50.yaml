@@ -1,0 +1,12 @@
+schema: "classroom50/repo-config/v1"
+classroom: "m1-0126-wd301"
+assignment: "prisma-assignment-m0126-wd301"
+owner:
+  username: "jamiejy927"
+  id: 253347247
+  accepted_at: "2026-09-14T01:36:39Z"
+source:
+  owner: "Cornerstone-CICCC"
+  owner_id: 113148113
+  repo: "wd-301-multi-step-prisma"
+  branch: "main"
