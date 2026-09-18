@@ -11,7 +11,10 @@ export type BookingDraft = Partial<Pick<Booking,
     | "phone"
     | "service_date"
     | "time_slot"
-  >
+  > & {
+    additional_info?: string;
+    referral_source?: string;
+  }
 >;
 
 export function getDraft(): BookingDraft {

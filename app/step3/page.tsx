@@ -4,12 +4,12 @@ import { useRouter } from "next/navigation";
 import { SubmitEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { createBooking, getBookedSlotsByDate, type BookedSlots } from "@/app/actions/booking";
+import { getBookedSlotsByDate, type BookedSlots } from "@/app/actions/booking";
 import DateField from "@/components/DateField";
 import RadioCardGroup from "@/components/RadioCardGroup";
 import StepHeader from "@/components/StepHeader";
 import StepNav from "@/components/StepNav";
-import { clearDraft, getDraft, saveDraft } from "@/lib/storage";
+import { getDraft, saveDraft } from "@/lib/storage";
 import { TIME_SLOTS, type TimeSlot } from "@/lib/types";
 
 const NO_BOOKED_SLOTS: BookedSlots = {
@@ -32,7 +32,6 @@ export default function Step3Page() {
   }, []);
 
   useEffect(() => {
-    // If no date is selected, skip the fetch (UI disables all slots separately).
     if (!serviceDate) return;
 
     async function fetchBookedSlots() {
@@ -43,7 +42,6 @@ export default function Step3Page() {
     fetchBookedSlots();
   }, [serviceDate]);
 
-  // Determine disabled time slots based on existing bookings and conflict rules
   const disabledValues = !serviceDate
     ? new Set(TIME_SLOTS.map((slot) => slot.value))
     : (() => {
@@ -87,48 +85,19 @@ export default function Step3Page() {
       return;
     }
 
-    const draft = saveDraft({
+    saveDraft({
       service_date: serviceDate,
       time_slot: timeSlot as TimeSlot,
     });
 
-    if (
-      !draft.city ||
-      !draft.street_address ||
-      !draft.lawn_size ||
-      !draft.full_name ||
-      !draft.email ||
-      !draft.phone
-    ) {
-      toast.error("Please complete all booking steps before submitting.");
-      return;
-    }
-
-    const result = await createBooking({
-      city: draft.city,
-      street_address: draft.street_address,
-      lawn_size: draft.lawn_size,
-      full_name: draft.full_name,
-      email: draft.email,
-      phone: draft.phone,
-      service_date: serviceDate,
-      time_slot: timeSlot as TimeSlot,
-    });
-
-    if (result.success) {
-      clearDraft();
-      toast.success("Booking completed successfully!");
-      router.push("/");
-      return;
-    }
-
-    toast.error(result.error);
+    router.push("/step4");
   };
 
   return (
     <div className="max-w-xl mx-auto">
       <StepHeader
         step={3}
+        total={5}
         title="When should we come?"
         subtitle="Choose your preferred date and time slot for the lawn service."
       />
@@ -149,7 +118,7 @@ export default function Step3Page() {
           disabledLabel={serviceDate ? "Already Booked" : "Select a date first"}
         />
 
-        <StepNav onBack={() => router.push("/step2")} nextLabel="Complete Booking →" />
+        <StepNav onBack={() => router.push("/step2")} nextLabel="Next: Additional Info →" />
       </form>
     </div>
   );

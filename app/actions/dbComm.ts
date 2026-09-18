@@ -23,10 +23,10 @@ export async function bookingsDB(id: number) {
     select
       id, city, street_address, lawn_size, full_name, email, phone,
       to_char(service_date, 'YYYY-MM-DD') as service_date,
-      time_slot, status, note, created_at, updated_at
+      time_slot, status, note, additional_info, referral_source, created_at, updated_at
     from bookings
     where id = ${id}
-  `) as Booking[];
+  `) as (Booking & { additional_info?: string | null; referral_source?: string | null })[];
   return DBresult[0];
 }
 
@@ -53,26 +53,30 @@ export async function updateDB(
   service_date: string,
   time_slot: string,
   note: string,
+  additional_info: string,
+  referral_source: string,
 ) {
   await requireStaff();
-  await sql`UPDATE bookings SET city = ${city}, street_address = ${street_address}, lawn_size = ${lawn_size}, full_name = ${full_name}, email = ${email}, phone = ${phone}, service_date = ${service_date}, time_slot = ${time_slot}, note = ${note}
+  await sql`UPDATE bookings SET city = ${city}, street_address = ${street_address}, lawn_size = ${lawn_size}, full_name = ${full_name}, email = ${email}, phone = ${phone}, service_date = ${service_date}, time_slot = ${time_slot}, note = ${note}, additional_info = ${additional_info}, referral_source = ${referral_source}
 WHERE id = ${id} AND status IN ('pending', 'confirmed')`;
   refreshBooking(id);
   return 1;
 }
 
-export async function applyUpdate(id: number, formData: FormData, fallback: Booking) {
+export async function applyUpdate(id: number, formData: FormData, fallback: Booking & { additional_info?: string | null; referral_source?: string | null }) {
   const full_name = String(formData.get("full_name") ?? "") || fallback.full_name;
   const email = String(formData.get("email") ?? "") || fallback.email;
   const phone = String(formData.get("phone") ?? "") || fallback.phone;
   const lawn_size = String(formData.get("lawn_size") ?? "") || fallback.lawn_size;
   const note = String(formData.get("note") ?? "");
+  const additional_info = String(formData.get("additional_info") ?? "");
+  const referral_source = String(formData.get("referral_source") ?? "");
   const street = String(formData.get("street") ?? "") || fallback.street_address;
   const city = String(formData.get("city") ?? "") || fallback.city;
   const time_slot = String(formData.get("time_slot") ?? "") || fallback.time_slot;
   const service_date = String(formData.get("service_date") ?? "") || fallback.service_date;
 
-  await updateDB(id, city, street, lawn_size, full_name, email, phone, service_date, time_slot, note);
+  await updateDB(id, city, street, lawn_size, full_name, email, phone, service_date, time_slot, note, additional_info, referral_source);
 }
 
 export async function completedDB(id: number) {

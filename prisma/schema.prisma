@@ -1,21 +1,22 @@
-// use prisma-8
+model Booking {
+  id             Int      @id @default(autoincrement())
+  city           String
+  streetAddress  String   @map("street_address")
+  lawnSize       String   @map("lawn_size")
+  fullName       String   @map("full_name")
+  email          String
+  phone          String
+  serviceDate    DateTime @map("service_date")
+  timeSlot       String   @map("time_slot")
+  status         String   @default("pending")
+  note           String?
+  
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  username  String?
-  name      String?
-  posts     Post[]
-  createdAt TimestamptzString @default(now())
-  updatedAt temporal.updatedAtString()
-}
+  additionalInfo String?  @map("additional_info")
+  referralSource String?  @map("referral_source")
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
-  createdAt TimestamptzString @default(now())
-  updatedAt temporal.updatedAtString()
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt
+
+  @@map("bookings")
 }

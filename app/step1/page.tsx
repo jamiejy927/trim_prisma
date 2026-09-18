@@ -58,6 +58,7 @@ export default function Step1Page() {
     <div className="max-w-xl mx-auto">
       <StepHeader
         step={1}
+        total={5}
         title="Where is your lawn located?"
         subtitle="Select your city, enter your address, and choose your lawn size."
       />

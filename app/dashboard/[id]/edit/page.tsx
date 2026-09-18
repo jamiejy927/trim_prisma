@@ -131,6 +131,12 @@ export default async function BookingEditPage({ params, searchParams }: PageProp
           <Field label="Note">
             <input className={inputClass} type="text" name="note" defaultValue={booking.note ?? ""} />
           </Field>
+          <Field label="Additional Info">
+            <input className={inputClass} type="text" name="additional_info" defaultValue={booking.additional_info ?? ""} />
+          </Field>
+          <Field label="Referral Source">
+            <input className={inputClass} type="text" name="referral_source" defaultValue={booking.referral_source ?? ""} />
+          </Field>
         </div>
 
         <aside className={`flex flex-col gap-4 shrink-0 md:w-52 px-4 py-5 border-t md:border-t-0 md:border-l ${rail.wrap}`}>

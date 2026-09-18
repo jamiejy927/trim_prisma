@@ -34,10 +34,10 @@ export default async function BookingDetailPage({ params, searchParams }: PagePr
     select
       id, city, street_address, lawn_size, full_name, email, phone,
       to_char(service_date, 'YYYY-MM-DD') as service_date,
-      time_slot, status, note, created_at, updated_at
+      time_slot, status, note, additional_info, referral_source, created_at, updated_at
     from bookings
     where id = ${id}
-  `) as Booking[];
+  `) as (Booking & { additional_info?: string | null; referral_source?: string | null })[];
 
   const booking = rows[0];
   if (!booking) notFound();
@@ -82,6 +82,12 @@ export default async function BookingDetailPage({ params, searchParams }: PagePr
             </Info>
             <Info label="Note">
               {booking.note ? booking.note : <span className="font-normal text-gray-400">None</span>}
+            </Info>
+            <Info label="Additional Info">
+              {booking.additional_info ? booking.additional_info : <span className="font-normal text-gray-400">None</span>}
+            </Info>
+            <Info label="Referral Source">
+              {booking.referral_source ? booking.referral_source : <span className="font-normal text-gray-400">None</span>}
             </Info>
           </dl>
         </div>

@@ -14,6 +14,8 @@ export type CreateBookingInput = {
   service_date: string;
   time_slot: TimeSlot;
   note?: string | null;
+  additional_info?: string | null;
+  referral_source?: string | null;
 };
 
 export type CreateBookingResult = { success: true } | { success: false; error: string };
@@ -65,6 +67,8 @@ export async function createBooking(formData: CreateBookingInput): Promise<Creat
         service_date,
         time_slot,
         note,
+        additional_info,
+        referral_source,
         status
       ) VALUES (
         ${formData.city},
@@ -76,6 +80,8 @@ export async function createBooking(formData: CreateBookingInput): Promise<Creat
         ${formData.service_date},
         ${formData.time_slot},
         ${formData.note || null},
+        ${formData.additional_info || null},
+        ${formData.referral_source || null},
         'pending'
       )
     `;

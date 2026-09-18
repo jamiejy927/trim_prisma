@@ -57,6 +57,7 @@ export default function Step2Page() {
     <div className="max-w-xl mx-auto">
       <StepHeader
         step={2}
+        total={5}
         title="Tell us about yourself"
         subtitle="Please provide your contact details so we can reach you about your service."
       />
