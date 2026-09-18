@@ -1,5 +1,21 @@
 # WD-301 Assignment: Multi-Step Form + Prisma
 
+
+## 🚀 Features Added (WD-301 Assignment)
+
+In addition to the existing midterm booking workflow, the following features and data layer improvements have been implemented:
+
+1. **Extended Booking Form (+2 Steps)**:
+   - **Step 4 (Additional Information)**: Allows clients to provide special requests or notes (e.g., gate instructions, pets in the backyard).
+   - **Step 5 (Referral Source)**: Collects information on how customers discovered the service (e.g., Google Search, Social Media, Friend recommendations).
+
+2. **Database & ORM Integration**:
+   - Integrated Prisma Client to manage all database communications safely.
+   - Added migrations for the new `additional_info` and `referral_source` columns in the database.
+
+3. **Staff Dashboard Updates**:
+   - Updated the booking detail and edit pages so that staff members can view and update the new additional details and referral sources.
+
 **Individual assignment.** You will continue from your team's midterm booking app, but this time you work alone on your own copy.
 
 Your midterm booking app works, but the data layer was built without an ORM. Now the "owner" wants two things: a safer, well-documented database layer, and a booking form that collects more information.
