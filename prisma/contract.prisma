@@ -1,3 +1,5 @@
+// use prisma-8
+
 model Booking {
   id             Int      @id @default(autoincrement())
   city           String
@@ -16,7 +18,7 @@ model Booking {
   referralSource String?  @map("referral_source")
 
   createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt
+  updatedAt      DateTime
 
   @@map("bookings")
 }
